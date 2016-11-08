@@ -3,46 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Tabs</title>
-	<script src="jquery.min.js"></script>
-	<style>
-		* {
-		  margin: 0;
-		  padding: 0;
-		  box-sizing: border-box;
-		}
-		ul {
-		  list-style: none;
-		 }
-		.tabs {
-		  width: 600px;
-		  margin: 40px auto;
-		  background: rgba(0, 0, 0, .2);
-		  box-shadow: 1px 1px 10px rgba(0, 0, 0, .6);
-		}
-		.tabs-control__item {
-			display: inline-block;
-			vertical-align: top;
-			width: 20%;
-		}
-		.tabs-control {
-			padding: 15px;
-			font-size: 0;
-		}
-		.tabs-control__link {
-		  font: 20px Arial, Helvetica, sans-serif;
-		  text-decoration: none;
-		  color: rgba(211,33, 45, 1);
-		  transition: color .3s;
-		 }
-		.tabs-control__link:hover,
-		.tabs-control__link.is-active {
-			color: rgba(211,33, 45, .5);
-		}
-		.tabs-content__item {
-			display: none;
-		}
-		.tabs-content__item.is-active {display: block;}
-	</style>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="tabs js-tabs">
@@ -72,45 +33,7 @@
 			<li class="tabs-content__item js-content-item" data-content="tab5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur saepe sapiente, consequuntur doloremque ex! Temporibus adipisci ratione sint earum repellendus laudantium accusantium facilis aut doloribus dolore, expedita totam ad minima rem. Ipsam, quaerat quia animi!</li>
 		</ul>
 	</div>
-	<script>
-		$(document).ready(function() {
-			"use strict"
-
-			var hash = location.hash,
-				links = $('.js-tabs-link'),
-				allContent = $('.js-content-item'),
-				filtered = hash === filterElements(hash).link.attr('href') ?  filterElements(hash) : filterElements();
-
-			function filterElements(hash) {
-				var link, content;
-
-				if(hash) {
-					link = links.filter('[href="' + hash + '"]');
-					content = allContent.filter('[data-content="' + hash.slice(1) + '"]');
-				} else {
-					link = links.eq(0);
-					content = allContent.eq(0);
-				}
-				return {
-					link: link,
-					content: content
-				};
-			}
-
-			function addClassElement(currentLink, currentContent) {
-				links.add(allContent).removeClass('is-active');
-				currentLink.add(currentContent).addClass('is-active');
-			}
-
-			addClassElement(filtered.link, filtered.content);
-
-			$(window).on( 'hashchange', function(e) {
-				hash = location.hash;
-				filtered = hash === filterElements(hash).link.attr('href') ?  filterElements(hash) : filterElements();
-
-				addClassElement(filtered.link, filtered.content);
-			});
-		});
-	</script>
+	<script src="js/vendors/jquery.min.js"></script>
+	<script src="js/app.js"></script>
 </body>
 </html>
