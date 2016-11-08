@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tabs</title>
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>
+	<style>
+		* {
+		  margin: 0;
+		  padding: 0;
+		  box-sizing: border-box;
+		}
+		ul {
+		  list-style: none;
+		 }
+		.tabs {
+		  width: 600px;
+		  margin: 40px auto;
+		  background: rgba(0, 0, 0, .2);
+		  box-shadow: 1px 1px 10px rgba(0, 0, 0, .6);
+		}
+		.tabs-control__item {
+			display: inline-block;
+			vertical-align: top;
+			width: 20%;
+		}
+		.tabs-control {
+			padding: 15px;
+			font-size: 0;
+		}
+		.tabs-control__link {
+		  font: 20px Arial, Helvetica, sans-serif;
+		  text-decoration: none;
+		  color: rgba(211,33, 45, 1);
+		  transition: color .3s;
+		 }
+		.tabs-control__link:hover,
+		.tabs-control__link.is-active {
+			color: rgba(211,33, 45, .5);
+		}
+		.tabs-content__item {
+			display: none;
+		}
+		.tabs-content__item.is-active {display: block;}
+	</style>
+</head>
+<body>
+	<div class="tabs js-tabs">
+		<ul class="tabs-control">
+			<li class="tabs-control__item js-control-item">
+				<a href="#tab1" class="tabs-control__link js-tabs-link">Link  1</a>
+			</li>
+			<li class="tabs-control__item js-control-item">
+				<a href="#tab2" class="tabs-control__link js-tabs-link">Link  2</a>
+			</li>
+			<li class="tabs-control__item js-control-item">
+				<a href="#tab3" class="tabs-control__link js-tabs-link">Link  3</a>
+			</li>
+			<li class="tabs-control__item js-control-item">
+				<a href="#tab4" class="tabs-control__link js-tabs-link">Link  4</a>
+			</li>
+			<li class="tabs-control__item js-control-item">
+				<a href="#tab5" class="tabs-control__link js-tabs-link">Link  5</a>
+			</li>
+		</ul>
+		<ul class="tabs-content">
+			<li class="tabs-content__item js-content-item" data-content="tab1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur consectetur optio quis, soluta molestiae sapiente suscipit. Quidem dolor expedita, optio voluptatum sapiente itaque non. Saepe debitis inventore error nam in!</li>
+			<li class="tabs-content__item js-content-item" data-content="tab2"><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste ducimus, dolorem. Placeat culpa consectetur, odit iure voluptate id labore reiciendis in impedit, ad reprehenderit ut a. Obcaecati excepturi in, maxime!</div>
+			<div>Obcaecati cupiditate accusantium quo dolores, nihil provident tempore sed excepturi, eveniet deleniti modi optio eaque animi consequatur sapiente id rerum maiores! Blanditiis ea, aliquam quis libero voluptatem debitis repellendus, tempora.</div></li>
+			<li class="tabs-content__item js-content-item" data-content="tab3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, at.</li>
+			<li class="tabs-content__item js-content-item" data-content="tab4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid culpa doloremque inventore quae earum numquam voluptatibus debitis tenetur iusto fugiat!</li>
+			<li class="tabs-content__item js-content-item" data-content="tab5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur saepe sapiente, consequuntur doloremque ex! Temporibus adipisci ratione sint earum repellendus laudantium accusantium facilis aut doloribus dolore, expedita totam ad minima rem. Ipsam, quaerat quia animi!</li>
+		</ul>
+	</div>
+	<script>
+		$(document).ready(function() {
+			"use strict"
+
+			var hash = location.hash,
+				links = $('.js-tabs-link'),
+				allContent = $('.js-content-item'),
+				filtered = hash === filterElements(hash).link.attr('href') ?  filterElements(hash) : filterElements();
+
+			function filterElements(hash) {
+				var link, content;
+
+				if(hash) {
+					link = links.filter('[href="' + hash + '"]');
+					content = allContent.filter('[data-content="' + hash.slice(1) + '"]');
+				}  else {
+					link = links.eq(0);
+					content = allContent.eq(0);
+				}
+				return {
+					link: link,
+					content: content,
+				};
+			}
+
+			function addClassElement(currentLink, currentContent) {
+				links.add(allContent).removeClass('is-active');
+				currentLink.add(currentContent).addClass('is-active');
+			}
+
+			addClassElement(filtered.link, filtered.content);
+
+			$(window).on( 'hashchange', function(e) {
+				hash = location.hash;
+				filtered = filterElements(hash);
+
+				if(filtered.link.attr('href') === hash) {
+					addClassElement(filtered.link, filtered.content);
+				} else {
+					filterElements();
+				}
+			});
+		});
+	</script>
+</body>
+</html>
