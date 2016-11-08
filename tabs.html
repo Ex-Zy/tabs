@@ -3,10 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Tabs</title>
-	<script
-	  src="https://code.jquery.com/jquery-3.1.1.min.js"
-	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	  crossorigin="anonymous"></script>
+	<script src="jquery.min.js"></script>
 	<style>
 		* {
 		  margin: 0;
@@ -90,13 +87,13 @@
 				if(hash) {
 					link = links.filter('[href="' + hash + '"]');
 					content = allContent.filter('[data-content="' + hash.slice(1) + '"]');
-				}  else {
+				} else {
 					link = links.eq(0);
 					content = allContent.eq(0);
 				}
 				return {
 					link: link,
-					content: content,
+					content: content
 				};
 			}
 
@@ -109,13 +106,9 @@
 
 			$(window).on( 'hashchange', function(e) {
 				hash = location.hash;
-				filtered = filterElements(hash);
+				filtered = hash === filterElements(hash).link.attr('href') ?  filterElements(hash) : filterElements();
 
-				if(filtered.link.attr('href') === hash) {
-					addClassElement(filtered.link, filtered.content);
-				} else {
-					filterElements();
-				}
+				addClassElement(filtered.link, filtered.content);
 			});
 		});
 	</script>
